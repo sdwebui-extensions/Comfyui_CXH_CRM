@@ -66,8 +66,11 @@ class CRM:
         results = []
         
         #下载模型
-        craft_model_id = "Zhengyi/CRM"
-        model_checkpoint = download_hg_model(craft_model_id,"CRM")
+        if os.path.exists('/stable-diffusion-cache/models/CRM'):
+            model_checkpoint = '/stable-diffusion-cache/models/CRM'
+        else:
+            craft_model_id = "Zhengyi/CRM"
+            model_checkpoint = download_hg_model(craft_model_id,"CRM")
         ckpt_path= os.path.join(model_checkpoint,"pixel-diffusion.pth") 
         
         from pipelines import TwoStagePipeline
