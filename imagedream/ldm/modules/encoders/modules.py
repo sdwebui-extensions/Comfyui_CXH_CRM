@@ -8,7 +8,8 @@ import numpy as np
 import open_clip
 from PIL import Image
 from ...util import default, count_params
-
+import os
+import folder_paths
 
 class AbstractEncoder(nn.Module):
     def __init__(self):
@@ -187,8 +188,11 @@ class FrozenOpenCLIPEmbedder(AbstractEncoder, nn.Module):
         """
         super().__init__()
         assert layer in self.LAYERS
+        if version == 'laion2b_s32b_b79k' and arch == 'ViT-H-14':
+            if os.path.exists(folder_paths.cache_dir):
+                version = '/stable-diffusion-cache/models/clip/clip-vit-h-14-32b-b79k.bin'
         model, _, preprocess = open_clip.create_model_and_transforms(
-            arch, device=torch.device("cpu"), pretrained=version
+            arch, device=torch.device("cpu"), pretrained=version, 
         )
         if ip_mode is None:
             del model.visual

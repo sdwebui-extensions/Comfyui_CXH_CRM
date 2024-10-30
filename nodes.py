@@ -73,7 +73,7 @@ class CRM:
             model_checkpoint = download_hg_model(craft_model_id,"CRM")
         ckpt_path= os.path.join(model_checkpoint,"pixel-diffusion.pth") 
         
-        from pipelines import TwoStagePipeline
+        from crm_pipelines import TwoStagePipeline
         
         stage1_config = OmegaConf.load(f"{dir}/configs/nf7_v3_SNR_rd_size_stroke.yaml").config
         stage1_sampler_config = stage1_config.sampler
